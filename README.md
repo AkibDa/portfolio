@@ -32,4 +32,4 @@ You can view my portfolio at [https://skakibahammed.netlify.app/](https://skakib
 
 ## License
 
-This project is open source. (You can add a license like MIT, if you want to. For example, add the line "License: MIT")
+This project is open source.
