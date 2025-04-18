@@ -1,3 +1,4 @@
+// ==== Typing Animation ====
 const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
 const textArray = ["Sk Akib Ahammed", "a Developer", "an AI Engineer", "a Problem Solver"];
@@ -19,224 +20,194 @@ function type() {
 
 function erase() {
   if (charIndex > 0) {
-    typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+    typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
     charIndex--;
     setTimeout(erase, erasingDelay);
   } else {
-    textArrayIndex++;
-    if(textArrayIndex>=textArray.length) textArrayIndex=0;
+    textArrayIndex = (textArrayIndex + 1) % textArray.length;
     setTimeout(type, typingDelay + 1100);
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  setTimeout(type, newTextDelay + 250);
-});
+// ==== Scroll Events (Debounced) ====
+function debounce(func, wait = 20) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
-window.addEventListener('scroll', function() {
-    const scrollProgress = document.querySelector('.scroll-progress');
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercentage = (scrollTop / scrollHeight) * 100;
-    scrollProgress.style.width = scrollPercentage + '%';
-  });
-  
-  window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-  
+function updateScrollProgress() {
+  const scrollProgress = document.querySelector('.scroll-progress');
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrollPercentage = (scrollTop / scrollHeight) * 100;
+  scrollProgress.style.width = scrollPercentage + '%';
+}
+
+function toggleNavbarScrolled() {
+  const navbar = document.querySelector('.navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+}
+
+// ==== Smooth Anchor Scroll ====
+function enableSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
+      document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
     });
   });
-  
-  const observerOptions = {
-    threshold: 0.1
-  };
-  
+}
+
+// ==== Scroll-based Animation ====
+function observeScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('animate');
     });
-  }, observerOptions);
-  
+  }, { threshold: 0.1 });
+
   document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
     observer.observe(el);
   });
-  
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-10px)';
-    });
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0)';
-    });
-  });
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-      initFloatingLabels();
-      
-      contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        if (!validateForm()) {
-          return;
-        }
-        
-        const formData = new FormData(contactForm);
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalBtnContent = submitBtn.innerHTML;
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        try {
-          const response = await simulateFormSubmission(formData);
-          
-          showFormFeedback('success', 'Message sent successfully!');
-          contactForm.reset();
-          resetFloatingLabels();
-        } catch (error) {
-          showFormFeedback('error', 'Failed to send message. Please try again.');
-        } finally {
-          setTimeout(() => {
-            submitBtn.innerHTML = originalBtnContent;
-            submitBtn.disabled = false;
-          }, 3000);
-        }
-      });
-    }
-    
-    function initFloatingLabels() {
-      const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
-      
-      formInputs.forEach(input => {
-        if (input.value) {
-          input.parentElement.classList.add('focused', 'has-value');
-        }
-        
-        input.addEventListener('focus', function() {
-          this.parentElement.classList.add('focused');
-        });
-        
-        input.addEventListener('blur', function() {
-          if (!this.value) {
-            this.parentElement.classList.remove('focused');
-          }
-          this.parentElement.classList.toggle('has-value', !!this.value);
-        });
-        
-        input.addEventListener('input', function() {
-          validateField(this);
-        });
-      });
-    }
-    
-    function resetFloatingLabels() {
-      document.querySelectorAll('.form-group').forEach(group => {
-        group.classList.remove('focused', 'has-value');
-      });
-    }
-    
-    function validateField(field) {
-      const group = field.parentElement;
-      const errorElement = group.querySelector('.error-message') || createErrorElement(group);
-      
-      group.classList.remove('invalid');
-      errorElement.textContent = '';
-      
-      if (field.required && !field.value.trim()) {
-        showFieldError(group, errorElement, 'This field is required');
-        return false;
-      }
-      
-      if (field.type === 'email' && !isValidEmail(field.value)) {
-        showFieldError(group, errorElement, 'Please enter a valid email');
-        return false;
-      }
-      
-      return true;
-    }
-    
-    function validateForm() {
-      let isValid = true;
-      const requiredFields = document.querySelectorAll('.form-group [required]');
-      
-      requiredFields.forEach(field => {
-        if (!validateField(field)) {
-          isValid = false;
-        }
-      });
-      
-      return isValid;
-    }
-    
-    function createErrorElement(group) {
-      const errorElement = document.createElement('div');
-      errorElement.className = 'error-message';
-      group.appendChild(errorElement);
-      return errorElement;
-    }
-    
-    function showFieldError(group, errorElement, message) {
-      group.classList.add('invalid');
-      errorElement.textContent = message;
-      return false;
-    }
-    
-    function isValidEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    }
-    
-    function showFormFeedback(type, message) {
-      const feedbackElement = document.createElement('div');
-      feedbackElement.className = `form-feedback ${type}`;
-      feedbackElement.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-        ${message}
-      `;
-      
-      const formContainer = document.querySelector('.contact-info-card');
-      const existingFeedback = document.querySelector('.form-feedback');
-      
-      if (existingFeedback) {
-        existingFeedback.replaceWith(feedbackElement);
-      } else {
-        formContainer.prepend(feedbackElement);
-      }
-      
-      setTimeout(() => {
-        feedbackElement.classList.add('fade-out');
-        setTimeout(() => feedbackElement.remove(), 300);
-      }, 5000);
-    }
-    
-    function simulateFormSubmission(formData) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          Math.random() > 0.1 ? resolve({
-            status: 200,
-            message: 'Success'
-          }) : reject({
-            status: 500,
-            message: 'Server error'
-          });
-        }, 1500);
-      });
-    }
+// ==== Project Card Hover Effect ====
+function enableCardHover() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-10px)');
+    card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
   });
+}
+
+// ==== Contact Form Logic ====
+function initFloatingLabels() {
+  const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+  formInputs.forEach(input => {
+    if (input.value) input.parentElement.classList.add('focused', 'has-value');
+
+    input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
+
+    input.addEventListener('blur', () => {
+      input.parentElement.classList.toggle('has-value', !!input.value);
+      if (!input.value) input.parentElement.classList.remove('focused');
+    });
+
+    input.addEventListener('input', () => validateField(input));
+  });
+}
+
+function resetFloatingLabels() {
+  document.querySelectorAll('.form-group').forEach(group => group.classList.remove('focused', 'has-value'));
+}
+
+function validateField(field) {
+  const group = field.parentElement;
+  const errorElement = group.querySelector('.error-message') || createErrorElement(group);
+  group.classList.remove('invalid');
+  errorElement.textContent = '';
+
+  if (field.required && !field.value.trim()) {
+    return showFieldError(group, errorElement, 'This field is required');
+  }
+
+  if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+    return showFieldError(group, errorElement, 'Please enter a valid email');
+  }
+
+  return true;
+}
+
+function showFieldError(group, errorElement, message) {
+  group.classList.add('invalid');
+  errorElement.textContent = message;
+  return false;
+}
+
+function createErrorElement(group) {
+  const errorElement = document.createElement('div');
+  errorElement.className = 'error-message';
+  group.appendChild(errorElement);
+  return errorElement;
+}
+
+function validateForm() {
+  let isValid = true;
+  document.querySelectorAll('.form-group [required]').forEach(field => {
+    if (!validateField(field)) isValid = false;
+  });
+  return isValid;
+}
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = form.querySelector('.submit-btn');
+  const originalBtnContent = submitBtn.innerHTML;
+  const formData = new FormData(form);
+
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+  submitBtn.disabled = true;
+
+  try {
+    if (!validateForm()) throw new Error("Validation failed");
+
+    const response = await fetch(form.action || '/your-endpoint', {
+      method: form.method || 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
+      submitBtn.style.background = '#00b894';
+      form.reset();
+      resetFloatingLabels();
+      showAlert('Message sent successfully!', 'success');
+    } else {
+      throw new Error('Form submission failed');
+    }
+  } catch (err) {
+    submitBtn.innerHTML = '<i class="fas fa-times"></i> Failed to Send';
+    submitBtn.style.background = '#ff7675';
+    showAlert('Failed to send message. Please try again.', 'error');
+  } finally {
+    setTimeout(() => {
+      submitBtn.innerHTML = originalBtnContent;
+      submitBtn.disabled = false;
+      submitBtn.style.background = '';
+    }, 5000);
+  }
+}
+
+function showAlert(message, type) {
+  const alertDiv = document.createElement('div');
+  alertDiv.className = `form-alert ${type}`;
+  alertDiv.textContent = message;
+  const form = document.getElementById('contactForm');
+  form.prepend(alertDiv);
+
+  setTimeout(() => {
+    alertDiv.classList.add('fade-out');
+    setTimeout(() => alertDiv.remove(), 300);
+  }, 5000);
+}
+
+// ==== DOM Ready ====
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(type, newTextDelay + 250);
+  enableSmoothScroll();
+  observeScrollAnimations();
+  enableCardHover();
+
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    initFloatingLabels();
+    contactForm.addEventListener('submit', handleFormSubmit);
+  }
+});
+
+window.addEventListener('scroll', debounce(updateScrollProgress));
+window.addEventListener('scroll', debounce(toggleNavbarScrolled));

@@ -551,6 +551,50 @@ html {
   transition: var(--transition);
 }
 
+.form-alert {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  animation: slideIn 0.3s ease-out;
+}
+
+.form-alert.success {
+  background: rgba(0, 184, 148, 0.2);
+  border-left: 4px solid #00b894;
+  color: #00b894;
+}
+
+.form-alert.error {
+  background: rgba(255, 118, 117, 0.2);
+  border-left: 4px solid #ff7675;
+  color: #ff7675;
+}
+
+.form-alert.fade-out {
+  animation: fadeOut 0.3s ease-in;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
