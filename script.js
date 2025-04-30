@@ -74,6 +74,93 @@ function observeScrollAnimations() {
   });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  function highlightNavLink() {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      
+      if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').includes(current)) {
+        link.classList.add('active');
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', highlightNavLink);
+  highlightNavLink(); 
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      
+      window.scrollTo({
+        top: targetSection.offsetTop,
+        behavior: 'smooth'
+      });
+      
+      history.pushState(null, null, targetId);
+  });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section');
+  
+  // Set up Intersection Observer
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(id)) {
+          link.classList.add('active');
+        }
+    });
+    }
+  });
+  }, observerOptions);
+  
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+  
+navLinks.forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
+    
+    window.scrollTo({
+      top: targetSection.offsetTop,
+      behavior: 'smooth'
+    });
+    
+    history.pushState(null, null, targetId);
+    });
+  });
+});
+
 // ==== Project Card Hover Effect ====
 function enableCardHover() {
   document.querySelectorAll('.project-card').forEach(card => {
@@ -86,16 +173,16 @@ function enableCardHover() {
 function initFloatingLabels() {
   const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
   formInputs.forEach(input => {
-    if (input.value) input.parentElement.classList.add('focused', 'has-value');
+  if (input.value) input.parentElement.classList.add('focused', 'has-value');
 
-    input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
+  input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
 
-    input.addEventListener('blur', () => {
-      input.parentElement.classList.toggle('has-value', !!input.value);
-      if (!input.value) input.parentElement.classList.remove('focused');
-    });
+  input.addEventListener('blur', () => {
+    input.parentElement.classList.toggle('has-value', !!input.value);
+    if (!input.value) input.parentElement.classList.remove('focused');
+  });
 
-    input.addEventListener('input', () => validateField(input));
+  input.addEventListener('input', () => validateField(input));
   });
 }
 
