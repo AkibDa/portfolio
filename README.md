@@ -1,6 +1,7 @@
 # skakibahammed-portfolio
 
 This repository contains the source code for my personal portfolio website, live at [https://skakibahammed.netlify.app/](https://skakibahammed.netlify.app/).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/22bff30a-d426-4db7-abb1-b4187d5d917f/deploy-status)](https://app.netlify.com/sites/skakibahammed/deploys)
 
 ## Description
 
