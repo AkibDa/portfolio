@@ -20,8 +20,8 @@
 body {
   font-family: 'Poppins', Arial, sans-serif;
   line-height: 1.7;
-  color: var(--text);
-  background-color: var(--light);
+  color: var(--text-light);
+  background-color: rgb(24, 28, 54);
   overflow-x: hidden;
 }
 
@@ -230,6 +230,8 @@ html {
 }
 
 .btn {
+  background: rgb(255, 213, 3);
+  color: rgb(26, 26, 46);
   display: inline-block;
   padding: 0.8rem 2rem;
   border-radius: 50px;
@@ -349,7 +351,7 @@ html {
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem;
-  background-color: var(--light);
+  background-color: rgb(24, 28, 54);
   border-radius: 5px;
   box-shadow: var(--shadow);
   transition: var(--transition);
@@ -368,7 +370,7 @@ html {
 /* Projects Section */
 .projects {
   padding: 6rem 2rem;
-  background-color: #f8f9fa;
+  background-color: rgb(24, 28, 54);
 }
 
 .project-grid {
@@ -380,7 +382,7 @@ html {
 }
 
 .project-card {
-  background: white;
+  background: rgb(47, 53, 77);
   padding: 6rem 2rem;
   border-radius: 10px;
   overflow: hidden;
