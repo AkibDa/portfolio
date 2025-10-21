@@ -410,7 +410,6 @@ html {
   left: 2rem;
   right: 2rem;
   transition: transform .5s;
-  font: 700 1.5rem monospace; /* From the new style */
   text-shadow: -1px -1px 0 #000,  
     1px -1px 0 #000,
     -1px 1px 0 #000,
