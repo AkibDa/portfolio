@@ -524,30 +524,112 @@ html {
   color: var(--accent);
 }
 
+/* Your original container style (selector corrected to '.social-links') */
 .social-links {
   display: flex;
-  gap: 1.5rem;
   justify-content: center;
   margin-top: 2rem;
 }
 
-.social-btn {
+/* New 3D icon styles, scoped to the container */
+.social-links ul {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--light);
-  font-size: 1.2rem;
-  transition: var(--transition);
+  padding: 0;
+  margin: 0;
 }
 
-.social-btn:hover {
-  background: var(--accent);
-  color: var(--dark);
-  transform: translateY(-3px);
+.social-links ul li {
+  position: relative;
+  list-style: none;
+  width: 60px;
+  height: 60px;
+  margin: 0 30px;
+  -webkit-transform: rotate(-30deg) skew(25deg);
+          transform: rotate(-30deg) skew(25deg);
+}
+
+/* 1. LinkedIn */
+.social-links ul li:nth-child(1) span {
+  background: #161f3b;
+}
+
+/* 2. GitHub */
+.social-links ul li:nth-child(2) span {
+  background: #161f3b;
+}
+
+/* 3. Twitter */
+.social-links ul li:nth-child(3) span {
+  background: #161f3b;
+}
+
+/* 4. Instagram */
+.social-links ul li:nth-child(4) span {
+  background: #161f3b;
+}
+
+.social-links ul li span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #fff;
+  font-size: 30px !important;
+}
+
+.social-links ul li:hover {
+  -webkit-box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.social-links ul li:hover span:nth-child(5) {
+  -webkit-transform: translate(40px, -40px);
+          transform: translate(40px, -40px);
+  opacity: 1;
+}
+
+.social-links ul li:hover span:nth-child(4) {
+  -webkit-transform: translate(30px, -30px);
+          transform: translate(30px, -30px);
+  opacity: .8;
+  background: #ffd900;
+}
+
+.social-links ul li:hover span:nth-child(3) {
+  -webkit-transform: translate(20px, -20px);
+          transform: translate(20px, -20px);
+  opacity: .6;
+  background: #ffd900;
+}
+
+.social-links ul li:hover span:nth-child(2) {
+  -webkit-transform: translate(10px, -10px);
+          transform: translate(10px, -10px);
+  opacity: .4;
+  background: #ffd900;
+}
+
+.social-links ul li:hover span:nth-child(1) {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  opacity: .2;
+  background: #ffd900;
 }
 
 .contact-form {
@@ -742,231 +824,6 @@ footer {
   .skills-list {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
-}
-
-/* Blog Styles */
-.blog-hero {
-    height: 50vh;
-    background: linear-gradient(-45deg, #6e48aa, #9d50bb, #4776e6, #6e48aa);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-}
-
-.blog-controls-section {
-    padding: 2rem 0;
-    background: var(--dark);
-}
-
-.blog-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-
-.search-container {
-    position: relative;
-    flex: 1;
-    max-width: 400px;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 0.75rem 2.5rem 0.75rem 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--light);
-    transition: var(--transition);
-}
-
-.search-container input:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.search-container i {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--light);
-}
-
-.blog-posts-section {
-    padding: 4rem 0;
-    background: var(--dark);
-}
-
-.blog-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.blog-post {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.blog-post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.post-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.post-content {
-    padding: 1.5rem;
-}
-
-.post-category {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    font-size: 0.875rem;
-    color: var(--accent);
-    margin-bottom: 1rem;
-}
-
-.post-title {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: var(--light);
-}
-
-.post-excerpt {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.post-date {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.875rem;
-}
-
-.post-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.post-actions button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    padding: 0.5rem;
-    border-radius: 4px;
-    color: var(--light);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.post-actions button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--accent);
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    position: relative;
-    background: var(--dark);
-    width: 90%;
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    border-radius: 12px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    color: var(--light);
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--light);
-    transition: var(--transition);
-}
-
-.close-btn:hover {
-    color: var(--accent);
-}
-
-/* Blog Form Styles */
-#blogForm .form-group {
-    margin-bottom: 1.5rem;
-}
-
-#blogForm label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--light);
-}
-
-#blogForm input,
-#blogForm select,
-#blogForm textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--light);
-    transition: var(--transition);
-}
-
-#blogForm input:focus,
-#blogForm select:focus,
-#blogForm textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
 }
 
 /* Responsive Design */
