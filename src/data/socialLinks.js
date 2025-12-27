@@ -13,11 +13,5 @@ export const socialLinks = [
     href: 'https://x.com/sk_ahammed61764',
     label: 'Twitter',
     icon: 'fa-twitter',
-  },
-  {
-    href: 'https://www.instagram.com/_akib.shann_/',
-    label: 'Instagram',
-    icon: 'fa-instagram',
-  },
+  }
 ];
-
