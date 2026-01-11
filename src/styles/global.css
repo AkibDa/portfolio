@@ -37,6 +37,8 @@ body {
   color: var(--light);
   background-color: var(--dark);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -86,14 +88,14 @@ main {
   background-color: rgba(2, 6, 23, 0.85); /* Matches dark theme */
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--light);
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   z-index: 1000;
   transition: var(--transition);
   backdrop-filter: blur(12px);
 }
 
 .navbar.scrolled {
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1.5rem;
   background-color: rgba(2, 6, 23, 0.95);
   border-bottom: 1px solid var(--primary-glow);
 }
@@ -108,20 +110,23 @@ main {
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 2.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-links button {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   position: relative;
   padding: 0.2rem 0;
   transition: var(--transition);
   font-family: 'Fira Code', monospace;
+  white-space: nowrap;
 }
 
 .nav-links button:hover,
@@ -148,26 +153,27 @@ main {
 /* --- SECTIONS --- */
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 5vw, 2.5rem);
   margin-bottom: 0.5rem;
   font-weight: 800;
   background: linear-gradient(to right, #fff, #94a3b8);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
 }
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  font-size: 0.8rem;
+  letter-spacing: 0.15rem;
+  font-size: 0.75rem;
   color: var(--primary);
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-family: 'Fira Code', monospace;
 }
 
@@ -175,29 +181,38 @@ main {
   color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  padding: 0 1rem;
 }
 
 /* --- ABOUT SECTION --- */
 .about, .projects, .contact {
-  padding: 8rem 2rem;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 2rem);
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .about-container {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 4rem;
+  grid-template-columns: 1fr;
+  gap: 3rem;
   align-items: start;
+}
+
+.profile-pic-container {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .profile-pic {
   width: 100%;
+  height: auto;
   border-radius: 12px;
   border: 2px solid rgba(255,255,255,0.1);
   filter: grayscale(20%);
   transition: var(--transition);
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 .profile-pic:hover {
@@ -208,28 +223,29 @@ main {
 .about-text {
   margin-bottom: 1.5rem;
   color: #cbd5e1;
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 2vw, 1.05rem);
+  line-height: 1.8;
 }
 
 /* --- SKILL BADGES --- */
 .skills-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 0.6rem;
   list-style: none;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .skills-list li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
   background: rgba(16, 185, 129, 0.05);
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
   color: var(--primary);
   transition: var(--transition);
 }
@@ -241,7 +257,7 @@ main {
 }
 
 .skills-list i {
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 /* --- BUTTONS --- */
@@ -249,9 +265,9 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
-  padding: 0 2rem;
-  min-width: 210px;
+  height: clamp(48px, 10vw, 56px);
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  min-width: min(210px, 100%);
   border-radius: 6px;
   font-weight: 700;
   text-decoration: none;
@@ -259,8 +275,8 @@ main {
   cursor: pointer;
   font-family: 'Fira Code', monospace;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   line-height: 1;
   user-select: none;
   box-sizing: border-box;
@@ -269,8 +285,8 @@ main {
 
 .btn svg, 
 .btn i {
-  margin-right: 10px;
-  font-size: 1.1rem;
+  margin-right: 8px;
+  font-size: 1rem;
   position: relative;
   top: -1px;
 }
@@ -314,18 +330,17 @@ main {
 }
 
 /* --- CONTACT SECTION --- */
-
 .contact {
   position: relative;
   overflow: hidden;
-  padding-bottom: 6rem;
+  padding-bottom: clamp(3rem, 6vw, 6rem);
 }
 
 .contact-grid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: clamp(2rem, 4vw, 3rem);
   max-width: 700px; 
   margin: 0 auto;  
 }
@@ -350,12 +365,14 @@ main {
   background: rgba(16, 185, 129, 0.05);
   border: 1px solid rgba(16, 185, 129, 0.2);
   margin-bottom: 0.8rem;
-  padding: 0.8rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
   transition: var(--transition);
+  width: 100%;
+  max-width: 300px;
 }
 
 .contact-info-item:hover {
@@ -366,7 +383,7 @@ main {
 
 .contact-info-item i {
   color: var(--primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .contact-info-item a, 
@@ -375,8 +392,9 @@ main {
   text-decoration: none;
   font-weight: 500;
   font-family: 'Fira Code', monospace;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   margin: 0;
+  word-break: break-word;
 }
 
 /* --- SOCIAL LINKS --- */
@@ -385,13 +403,14 @@ main {
   justify-content: center;
   list-style: none;
   margin-top: 1rem;
-  gap: 1rem;
+  gap: 0.8rem;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 .social-links li {
-  width: 44px;
-  height: 44px;
+  width: clamp(40px, 8vw, 44px);
+  height: clamp(40px, 8vw, 44px);
   transform: none;
 }
 
@@ -421,7 +440,7 @@ main {
   align-items: center;
   justify-content: center;
   color: #94a3b8;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.1rem);
   border-radius: 50%;
   transition: all 0.3s ease;
 }
@@ -438,7 +457,7 @@ main {
 .contact-form {
   width: 100%;
   background: #020617;
-  padding: 3rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
   border: 1px solid #1e293b;
   border-radius: 16px;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
@@ -459,35 +478,35 @@ main {
   align-items: center;
   justify-content: center;
   font-family: monospace;
-  font-size: 0.7rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.7rem);
   color: #475569;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: #64748b;
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .form-group input, 
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 1rem 1.2rem;
+  padding: clamp(0.8rem, 2vw, 1rem) clamp(1rem, 2vw, 1.2rem);
   background: #0f172a;
   border: 1px solid #334155;
   border-radius: 8px;
   color: #e2e8f0;
   font-family: 'Fira Code', monospace;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   transition: all 0.2s ease;
 }
 
@@ -501,20 +520,20 @@ main {
 }
 
 .form-group textarea {
-  min-height: 150px;
+  min-height: 120px;
   resize: vertical;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 1.2rem;
+  padding: clamp(1rem, 2vw, 1.2rem);
   margin-top: 1rem;
   background: var(--primary);
   color: #000;
   font-weight: 700;
   font-family: 'Fira Code', monospace;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -522,7 +541,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  font-size: clamp(0.85rem, 2vw, 0.9rem);
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -558,20 +578,178 @@ main {
   border: 1px solid #ef4444;
 }
 
-@media (max-width: 600px) {
-  .contact-form {
-    padding: 1.5rem;
-    padding-top: 3rem;
-  }
-}
-
 /* --- FOOTER --- */
 footer {
   border-top: 1px solid #1e293b;
   background: #020617;
-  padding: 3rem 0;
+  padding: clamp(2rem, 4vw, 3rem) 0;
   color: #64748b;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   text-align: center;
+  line-height: 1.6;
 }
 
+/* ========================
+   RESPONSIVE BREAKPOINTS
+   ======================== */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+  .navbar {
+    padding: 1rem 2rem;
+  }
+  
+  .navbar.scrolled {
+    padding: 0.8rem 2rem;
+  }
+  
+  .nav-links {
+    gap: 2.5rem;
+  }
+  
+  .about-container {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+  }
+  
+  .profile-pic-container {
+    max-width: none;
+    margin: 0;
+  }
+  
+  .contact-info-item {
+    width: auto;
+    max-width: none;
+  }
+  
+  .social-links {
+    gap: 1rem;
+  }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+  .contact-grid {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 1200px;
+  }
+  
+  .contact-info-card {
+    align-items: flex-start;
+    text-align: left;
+    flex: 0 0 300px;
+  }
+  
+  .contact-form {
+    flex: 1;
+  }
+}
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+  .contact-grid {
+    gap: 4rem;
+  }
+}
+
+/* Small mobile devices (480px and below) */
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-links button {
+    font-size: 0.8rem;
+  }
+  
+  .about, .projects, .contact {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .skills-list {
+    justify-content: center;
+  }
+  
+  .contact-info-item {
+    padding: 0.5rem 1rem;
+  }
+  
+  .contact-form {
+    padding: 1.25rem;
+    padding-top: 2.5rem;
+  }
+  
+  .contact-form::before {
+    font-size: 0.6rem;
+    height: 25px;
+  }
+}
+
+/* Extra small devices (320px and below) */
+@media (max-width: 320px) {
+  .nav-links {
+    gap: 0.75rem;
+  }
+  
+  .nav-links button {
+    font-size: 0.75rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.1rem;
+  }
+  
+  .btn {
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .contact-form {
+    padding: 1rem;
+    padding-top: 2.25rem;
+  }
+}
+
+/* Prevent text overflow on very small screens */
+@media (max-width: 360px) {
+  .contact-info-item a,
+  .contact-info-item p {
+    font-size: 0.75rem;
+  }
+  
+  .skills-list li {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .about, .projects, .contact {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  .section-header {
+    margin-bottom: 2rem;
+  }
+}
+
+/* High-resolution displays */
+@media (min-resolution: 192dpi) {
+  .glass-card {
+    backdrop-filter: blur(20px);
+  }
+  
+  .navbar {
+    backdrop-filter: blur(20px);
+  }
+}
