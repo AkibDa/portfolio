@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <h3 className="text-sm font-bold uppercase tracking-widest text-indigo-500">Links</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2">Resume <ExternalLink size={14} /></a></li>
+              <li><a href="https://docs.google.com/document/d/1dGxAjM69Vr1k8TY1NyhJSL9UILJeYZi_Mmf87mmkvLU/edit?usp=sharing" className="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2">Resume <ExternalLink size={14} /></a></li>
               <li><a href={PERSONAL_INFO.linkedin} className="text-gray-400 hover:text-white transition-colors">LinkedIn</a></li>
               <li><a href={PERSONAL_INFO.github} className="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
             </ul>
