@@ -45,10 +45,12 @@ const App: React.FC = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <a 
-                href="mailto:ahammedskakib@gmail.com" 
-                className="px-10 py-5 bg-white text-indigo-600 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl"
-              >
-                Send an Email
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=ahammedskakib@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-5 bg-white text-indigo-600 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl"
+                >
+                  Send an Email
               </a>
               <a 
                 href="https://www.linkedin.com/in/skakibahammed/" 
