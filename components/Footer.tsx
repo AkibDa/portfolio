@@ -3,6 +3,8 @@ import React from 'react';
 import { Mail, Linkedin, Github, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants';
 
+const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.email}`;
+
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-950 text-white py-20 px-6 lg:px-24">
@@ -19,7 +21,7 @@ const Footer: React.FC = () => {
             <a href={PERSONAL_INFO.github} target="_blank" rel="noreferrer" className="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all text-gray-400 hover:text-white">
               <Github size={20} />
             </a>
-            <a href={`mailto:${PERSONAL_INFO.email}`} className="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all text-gray-400 hover:text-white">
+            <a href={gmailLink} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all text-gray-400 hover:text-white">
               <Mail size={20} />
             </a>
           </div>

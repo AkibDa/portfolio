@@ -6,7 +6,13 @@ import { ArrowRight, Mail, Linkedin, Github } from 'lucide-react';
 import FloatingGeometry from './FloatingGeometry';
 import { PERSONAL_INFO } from '../constants';
 
-const Hero: React.FC = () => {
+const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.email}`;
+
+interface HeroProps {
+  onEmailRedirect?: (e: React.MouseEvent) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onEmailRedirect }) => {
   return (
     <section
       id="home"
@@ -67,16 +73,17 @@ const Hero: React.FC = () => {
 
           <div className="flex items-center gap-3">
             {[
-              { icon: Mail, href: `mailto:${PERSONAL_INFO.email}`, label: "Email" },
-              { icon: Github, href: PERSONAL_INFO.github, label: "GitHub" },
-              { icon: Linkedin, href: PERSONAL_INFO.linkedin, label: "LinkedIn" }
+              { icon: Mail, href: gmailLink, label: "Email", isEmail: true },
+              { icon: Github, href: PERSONAL_INFO.github, label: "GitHub", isEmail: false },
+              { icon: Linkedin, href: PERSONAL_INFO.linkedin, label: "LinkedIn", isEmail: false }
             ].map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-gray-800 rounded-full transition-all border border-gray-100 dark:border-gray-800 hover:border-indigo-100 dark:hover:border-indigo-900"
+                target={link.isEmail ? undefined : '_blank'}
+                rel={link.isEmail ? undefined : 'noreferrer'}
+                onClick={link.isEmail && onEmailRedirect ? (e) => { e.preventDefault(); onEmailRedirect(e); } : undefined}
+                className="p-3 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-gray-800 rounded-full transition-all border border-gray-100 dark:border-gray-800 hover:border-indigo-100 dark:hover:border-indigo-900 cursor-pointer"
                 aria-label={link.label}
               >
                 <link.icon size={22} />

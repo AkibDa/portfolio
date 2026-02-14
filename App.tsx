@@ -1,11 +1,14 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Footer from './components/Footer';
+import GmailConfirmModal from './components/GmailConfirmModal';
+import { PERSONAL_INFO } from './constants';
+
+const GMAIL_LINK = `https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.email}`;
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -15,6 +18,8 @@ const App: React.FC = () => {
     }
     return false;
   });
+
+  const [gmailModalOpen, setGmailModalOpen] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -27,11 +32,27 @@ const App: React.FC = () => {
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
+  const handleEmailRedirect = useCallback((e?: React.MouseEvent) => {
+    e?.preventDefault();
+    setGmailModalOpen(true);
+  }, []);
+
+  const handleGmailConfirmClose = useCallback(() => setGmailModalOpen(false), []);
+
+  const handleGmailConfirm = useCallback(() => {
+    window.open(GMAIL_LINK, '_blank', 'noopener,noreferrer');
+    setGmailModalOpen(false);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-900 selection:text-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        onEmailRedirect={handleEmailRedirect}
+      />
       <main>
-        <Hero />
+        <Hero onEmailRedirect={handleEmailRedirect} />
         <Stats />
         <Skills />
         <Projects />
@@ -44,13 +65,12 @@ const App: React.FC = () => {
               I'm currently seeking opportunities to contribute to impactful AI products and work with advanced model ecosystems.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <a 
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=ahammedskakib@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-10 py-5 bg-white text-indigo-600 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl"
-                >
-                  Send an Email
+              <a
+                href={GMAIL_LINK}
+                onClick={handleEmailRedirect}
+                className="px-10 py-5 bg-white text-indigo-600 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl cursor-pointer"
+              >
+                Send an Email
               </a>
               <a 
                 href="https://www.linkedin.com/in/skakibahammed/" 
@@ -65,6 +85,12 @@ const App: React.FC = () => {
         </section>
       </main>
       <Footer />
+
+      <GmailConfirmModal
+        isOpen={gmailModalOpen}
+        onClose={handleGmailConfirmClose}
+        onConfirm={handleGmailConfirm}
+      />
     </div>
   );
 };
